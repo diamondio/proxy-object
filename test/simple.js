@@ -31,7 +31,6 @@ describe('Simple Objects', function () {
       }
     }
 
-    var middleware = proxyObject.createMiddleware(simpleObject);
     app.post('/simple', proxyObject.createMiddleware(simpleObject));
 
     server = app.listen(3101, function () {
@@ -54,7 +53,6 @@ describe('Simple Objects', function () {
       }
     }
 
-    var middleware = proxyObject.createMiddleware(simpleObject);
     app.post('/simple', proxyObject.createMiddleware(simpleObject));
 
     server = app.listen(3101, function () {
@@ -83,7 +81,6 @@ describe('Simple Objects', function () {
       }
     }
 
-    var middleware = proxyObject.createMiddleware(simpleObject);
     app.post('/simple', proxyObject.createMiddleware(simpleObject));
 
     server = app.listen(3101, function () {
