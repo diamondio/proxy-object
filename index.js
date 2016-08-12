@@ -44,7 +44,7 @@ exports.createMiddleware = function (obj) {
     args.push(function () {
       res.json(Array.prototype.slice.call(arguments));
     });
-    obj[method].apply(null, args);
+    obj[method].apply(obj, args);
   };
 };
 
