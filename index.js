@@ -1,6 +1,9 @@
 var request = require('request');
 
-var callMethod = function (url, getHeaders, method, args, cb) {
+var isInTest = typeof global.it === 'function';
+
+var callMethod = function (url, getHeaders, method, args, cb, retry) {
+  if (isInTest && retry === undefined ) retry = 10;
   request({
     url: url,
     dataType: 'json',
@@ -11,6 +14,12 @@ var callMethod = function (url, getHeaders, method, args, cb) {
       method
     }
   }, function (err, res) {
+    if (err && (err.code === 'ECONNREFUSED' || err.code === 'ECONNRESET') && retry) {
+      return setTimeout(function () {
+        retry--;
+        callMethod(url, getHeaders, method, args, cb, retry);
+      }, 400);
+    }
     if (err && !res) return cb({ message: 'no_internet', details: err });
     if (!res) return cb({ message: 'no_response' });
     if (err) return cb(err);
