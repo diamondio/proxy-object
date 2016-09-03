@@ -18,7 +18,7 @@ var callMethod = function (url, getHeaders, method, args, cb, retry) {
       return setTimeout(function () {
         retry--;
         callMethod(url, getHeaders, method, args, cb, retry);
-      }, 400);
+      }, 3);
     }
     if (err && !res) return cb({ message: 'no_internet', details: err });
     if (!res) return cb({ message: 'no_response' });
