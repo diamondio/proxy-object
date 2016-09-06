@@ -8,7 +8,7 @@ var callMethod = function (url, getHeaders, method, args, cb, retry) {
     url: url,
     dataType: 'json',
     method: "POST",
-    timeout: 3000,
+    timeout: 8000,
     headers: getHeaders(),
     json: {
       args,
