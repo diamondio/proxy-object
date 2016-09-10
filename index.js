@@ -2,6 +2,7 @@ var request = require('request');
 var zlib = require('zlib');
 var streamToString = require('stream-to-string');
 var stringToStream = require('string-to-stream');
+var Busboy = require('busboy');
 
 var isInTest = typeof global.it === 'function';
 
@@ -58,7 +59,8 @@ exports.createProxy = function (url, getHeaders, methodList) {
 
 exports.createMiddleware = function (obj) { 
   return function (req, res, next) {
-    req.busboy.on('file', function (fieldname, file, filename) {
+    var busboy = new Busboy({ headers: req.headers });
+    busboy.on('file', function (fieldname, file, filename) {
       streamToString(file.pipe(zlib.createGunzip()), function (err, string) {
         if (err) console.log(err);
         var body = JSON.parse(string);
@@ -74,7 +76,7 @@ exports.createMiddleware = function (obj) {
         obj[method].apply(obj, args);
       });
     });
-    req.pipe(req.busboy);
+    req.pipe(busboy);
   };
 };
 
