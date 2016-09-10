@@ -36,6 +36,7 @@ describe('Simple Objects', function () {
     server = app.listen(3101, function () {
       var proxiedObject = proxyObject.createProxy('http://localhost:3101/simple', emptyHeaders, ['aMethod']);
       proxiedObject.aMethod(function (err, result) {
+        console.log(err);
         assert.ok(!err);
         assert.equal(result, 'Hello!');
         done();

@@ -1,4 +1,4 @@
-var request = require('request');
+var request = require('req-fast');
 
 var isInTest = typeof global.it === 'function';
 
@@ -10,7 +10,7 @@ var callMethod = function (url, getHeaders, method, args, cb, retry) {
     method: "POST",
     timeout: 8000,
     headers: getHeaders(),
-    json: {
+    data: {
       args,
       method
     }
