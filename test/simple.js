@@ -3,6 +3,7 @@ var bodyParser = require('body-parser');
 var express    = require('express');
 
 var proxyObject = require('../index');
+var busboy = require('connect-busboy');
 
 describe('Simple Objects', function () {
   var server = null;
@@ -23,7 +24,7 @@ describe('Simple Objects', function () {
 
   it('One method object', function (done) {
     var app = express();
-    app.use(bodyParser.json());
+    app.use(busboy());
 
     var simpleObject = {
       'aMethod': function (cb) {
@@ -45,7 +46,7 @@ describe('Simple Objects', function () {
 
   it('One method object with arguments', function (done) {
     var app = express();
-    app.use(bodyParser.json());
+    app.use(busboy());
 
     var simpleObject = {
       'aMethod': function (anArg, cb) {
@@ -67,7 +68,7 @@ describe('Simple Objects', function () {
 
   it('Object with several methods', function (done) {
     var app = express();
-    app.use(bodyParser.json());
+    app.use(busboy());
 
     var simpleObject = {
       'm1': function (cb) {
