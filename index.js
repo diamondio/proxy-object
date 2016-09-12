@@ -39,7 +39,14 @@ var callMethod = function (url, getHeaders, method, args, cb, retry) {
     if (res.statusCode !== 200) return cbOnce({ message: 'unexpected_status_code', details: `${res.statusCode} ${res.body}`});
   });
   streamToString(req.pipe(zlib.createGunzip()), function (err, string) {
-    cbOnce(null, JSON.parse(string));
+    if (err) return cbOnce(err);
+    var result;
+    try {
+      result = JSON.parse(string);
+    } catch (err) {
+      return cbOnce(err);
+    }
+    cbOnce(null, result);
   });
 }
 
