@@ -13,8 +13,8 @@ var callMethod = function (url, getHeaders, method, args, cb, retry) {
     if (!calledCB) {
       calledCB = true;
       if (err) return cb(err);
+      cb.apply(null, results);
     }
-    cb.apply(null, results);
   }
 
   var req = request({
